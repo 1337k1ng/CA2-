@@ -22,15 +22,39 @@ public class Phone implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String number;
     private String description;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     private Person person;
 
     public Phone() {
     }
+
+    public Phone(String number, String description) {
+        this.number = number;
+        this.description = description;
+    }
     
-  
+   public void setPerson(Person p) {
+       this.person = p;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
+   
 }

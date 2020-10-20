@@ -6,7 +6,9 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,11 +31,56 @@ public class Address implements Serializable {
     private String additionalInfo;
     
     @ManyToOne
-    private CityInfo cityInfo; 
+    private CityInfo cityInfo;
     @OneToMany(mappedBy = "address")
-    private List<Person> persons;
+    private List<Person> persons = new ArrayList();
 
     public Address() {
+    }
+
+    public Address(String street, String additionalInfo,int zipCode) {
+        this.street = street;
+        this.additionalInfo = additionalInfo;
+        this.cityInfo = new CityInfo(zipCode);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getAdditionalInfo() {
+        return additionalInfo;
+    }
+
+    public void setAdditionalInfo(String additionalInfo) {
+        this.additionalInfo = additionalInfo;
+    }
+
+    public CityInfo getCityInfo() {
+        return cityInfo;
+    }
+
+    public void setCityInfo(CityInfo cityInfo) {
+        this.cityInfo = cityInfo;
+    }
+
+    public List<Person> getPersons() {
+        return persons;
+    }
+    public void addPerson(Person p){
+    persons.add(p);
     }
 
 }

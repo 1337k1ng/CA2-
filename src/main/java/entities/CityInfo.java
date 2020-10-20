@@ -22,14 +22,45 @@ public class CityInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private int zipCode;
     private String city;
     @OneToMany(mappedBy = "cityInfo")
     private List<Address> address;
 
     public CityInfo() {
+    }
+
+    public CityInfo(int zipCode, String city) {
+        this.zipCode = zipCode;
+        this.city = city;
+    }
+
+    CityInfo(int zipCode) {
+       this.zipCode = zipCode;
+    }
+
+    public int getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(int zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public List<Address> getAddress() {
+        return address;
+    }
+
+    public void setAddress(List<Address> address) {
+        this.address = address;
     }
     
 

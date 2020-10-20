@@ -1,9 +1,11 @@
 package facades;
 
+import entities.Person;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -35,12 +37,71 @@ public class PersonFacade {
         return emf.createEntityManager();
     }
     
-    //TODO Remove/Change this before use
-    public long getRenameMeCount(){
+  
+    public List<Person> getAllPersons(){
         EntityManager em = emf.createEntityManager();
         try{
-            long renameMeCount = (long)em.createQuery("SELECT COUNT(r) FROM RenameMe r").getSingleResult();
-            return renameMeCount;
+            TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p", Person.class);
+            List<Person> persons = query.getResultList();
+            return persons;
+        }finally{  
+            em.close();
+        }
+        
+    }
+
+    public List<Person> getAllPersonswithSpecifiedHobby(String hobbyName){
+        EntityManager em = emf.createEntityManager();
+        try{
+            
+            TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p where ?1 MEMBE", Person.class);
+            query.setParameter(1, hobbyName);
+            List<Person> persons = query.getResultList();
+            return persons;
+        }finally{  
+            em.close();
+        }
+        
+    }
+    
+    
+    public Person getPersonByID(int id){
+        EntityManager em = emf.createEntityManager();
+        try{
+            
+            TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p where p.id = ?1", Person.class);
+            query.setParameter(1, id);
+            Person person = query.getSingleResult();
+            return person;
+        }finally{  
+            em.close();
+        }
+        
+    }
+
+    
+    public Person getPersonByTelephoneNumber(String number){
+        EntityManager em = emf.createEntityManager();
+        try{
+            
+            TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p where p.phoneNumbers.number = ?1", Person.class);
+            query.setParameter(1, number);
+            Person person = query.getSingleResult();
+            return person;
+        }finally{  
+            em.close();
+        }
+        
+    }
+    
+    public int getCountOfPersonsWithHobby(String hobbyName){
+        EntityManager em = emf.createEntityManager();
+        try{
+            
+            TypedQuery<Person> query = em.createQuery("SELECT COUNT(p) FROM Person p where p.hobby.name = ?1", Person.class);
+            query.setParameter(1, hobbyName);
+            List<Person> persons = query.getResultList();
+            return persons.size();
         }finally{  
             em.close();
         }
