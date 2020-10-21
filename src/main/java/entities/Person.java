@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,25 +32,23 @@ public class Person implements Serializable {
     private String firstName;
     private String lastName;
     
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Hobby> hobby = new ArrayList();
     
     @ManyToOne(cascade = CascadeType.ALL)
     private Address address;
     
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval=true)
-    private List<Phone> phoneNumbers;
+    private List<Phone> phoneNumbers = new ArrayList();
     
     public Person() {
     }
 
-    public Person(String email, String firstName, String lastName, String hobbyName, Address address, List<Phone> phoneNumbers) {
+    
+    public Person(String email, String firstName, String lastName) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        setHobby(hobbyName);
-        setAddress(address);
-        setPhoneNumbers(phoneNumbers);
     }
 
     public Long getId() {
@@ -111,12 +110,23 @@ public class Person implements Serializable {
          } 
     }
         
-  
-       public void setHobby(String hobbyName) {
-       EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");    
-       HobbyFacade hobbyFacade = HobbyFacade.getFacadeExample(emf);
-       
-       this.hobby.add(hobbyFacade.getHobby(hobbyName));
+    public void addPhone(String phoneNumber, String description){
+        if (phoneNumber != null){
+        Phone phone = new Phone(phoneNumber,description);
+         phone.setPerson(this);
+        this.phoneNumbers.add(phone) ;
+        }
     }
+    
+  
+    public void addHobby(String hobbyName){
+        if (hobbyName != null){
+        Hobby hobby = new Hobby(hobbyName, "", "", "");
+        this.hobby.add(hobby) ;
+        hobby.addPerson(this);
+        
+        }
+    }
+    
    
 }

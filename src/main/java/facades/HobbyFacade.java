@@ -11,7 +11,7 @@ import javax.persistence.TypedQuery;
  *
  * Rename Class to a relevant name Add add relevant facade methods
  */
-public class HobbyFacade {
+public class HobbyFacade implements IHobbyFacade {
 
     private static HobbyFacade instance;
     private static EntityManagerFactory emf;

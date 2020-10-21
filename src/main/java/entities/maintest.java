@@ -5,6 +5,7 @@
  */
 package entities;
 
+import facades.PersonFacade;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -23,21 +24,37 @@ public class maintest {
         //Create emf pointing to the dev-database
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
         EntityManager em = emf.createEntityManager();
-        List<Phone> phones = new ArrayList<Phone>();
-        
-        phones.add(new Phone("1121dADa3a","Hjemma11edNumamer"));
-        Person p = new Person("mai11adla","fiar1dst1a","laa1sdt1a","Airsoft",new Address("ve1a1dj","addi1atido1nale",2700),phones);
-        
+    
+    
+        Address a = new Address("Bredgade 122", "Hjemme addresse", 2700);
+        Person p = new Person("Hans@hotmai.com", "Hans", "Hansen");
+        p.addHobby("Airsoft");
+        p.addPhone("122222","Hjemma11edNumamer");
+        p.setAddress(a);
         try {
         em.getTransaction().begin();    
-        em.persist(p);
+       // em.persist(p);
             
+        em.getTransaction().commit();
+        
+           em.getTransaction().begin();    
+            Person pers = em.find(Person.class, 3L);
+            System.out.println(pers.getAddress().getCityInfo().getCity());
+            System.out.println(pers.getHobby().get(0).getWikiLink());
+             
+            PersonFacade pf = PersonFacade.getFacadeExample(emf);
+           List<Person> ppp = pf.getAllPersonswithSpecifiedHobby("Airsoft");
+            
+           
+                Hobby hob = em.find(Hobby.class, "Airsoft");
+                System.out.println(hob.getCategory());
+                System.out.println(hob.getPersons().size());
         em.getTransaction().commit();
         } finally {
       
             em.close();
         }
-    System.out.println(p.getAddress().getPersons().toString());
+ 
     }
     
 }

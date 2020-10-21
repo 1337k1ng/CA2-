@@ -6,10 +6,12 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,8 +30,9 @@ public class Hobby implements Serializable {
     private String wikiLink;
     private String category;
     private String type;
-    @ManyToMany(mappedBy = "hobby")
-    private List<Person> persons;
+    
+    @ManyToMany(mappedBy = "hobby", fetch = FetchType.EAGER)
+    private List<Person> persons = new ArrayList();
 
     public Hobby() {
     }
@@ -41,6 +44,7 @@ public class Hobby implements Serializable {
         this.type = type;
     }
 
+    
     void addPerson(Person p) {
         this.persons.add(p);
     }

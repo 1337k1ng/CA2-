@@ -1,5 +1,7 @@
 package facades;
 
+import Exceptions.HobbyNotFoundException;
+import Exceptions.PersonNotFoundException;
 import entities.Address;
 import entities.CityInfo;
 import entities.Hobby;
@@ -13,8 +15,10 @@ import javax.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 //Uncomment the line below, to temporarily disable this test
@@ -23,7 +27,12 @@ public class PersonFacadeTest {
 
     private static EntityManagerFactory emf;
     private static PersonFacade facade;
+    
 
+     static int id = 1;
+    static String phone = "2010211";
+    static String name = "Hans";
+    
     public PersonFacadeTest() {
     }
 
@@ -32,13 +41,28 @@ public class PersonFacadeTest {
        emf = EMF_Creator.createEntityManagerFactoryForTest();
        facade = PersonFacade.getFacadeExample(emf);
       EntityManager em = emf.createEntityManager();
+      
+       Person p = new Person("Hans@Hansen.dk", name, "Hansen");
+      Address a = new Address("Njalsgade", "Hjemmeadresse", 2700);
+    
+      p.addHobby("Taekwondo");
+      p.setAddress(a);
+      p.addPhone(phone, "Home phone");
+    
+      
        try {
             em.getTransaction().begin();
-            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
-            em.persist(new CityInfo(2700,"Glostrup"));
-            em.persist(new CityInfo(2800,"Roskilde"));
-            em.persist(new Hobby("Taekwondo","Brucelee.com","Badass-sport","Pure-fire"));
+                em.createNamedQuery("Person.deleteAllRows").executeUpdate();
+                em.persist(new CityInfo(2700,"Glostrup"));
+                em.persist(new CityInfo(2800,"Roskilde"));
+                em.persist(new Hobby("Taekwondo","Brucelee.com","Badass-sport","Pure-fire"));
             em.getTransaction().commit();
+            
+            
+            em.getTransaction().begin();
+                 em.persist(p);
+            em.getTransaction().commit();
+
         } finally {
             em.close();
         }
@@ -55,29 +79,12 @@ public class PersonFacadeTest {
     //TODO -- Make sure to change the code below to use YOUR OWN entity class
     @BeforeEach
     public void setUp() {
-        EntityManager em = emf.createEntityManager();
-        try {
-            em.getTransaction().begin();
-            List<Phone> phones1 = new ArrayList();
-              phones1.add(new Phone("40404040","Fastnet-nr"));
-              Person p = new Person("Hans@mail.dk","Hans","Hansen","Taekwondo",new Address("Vejenvej 21","HjemmeAdresse",2700),phones1);
-             em.persist(p);
-            em.getTransaction().commit();
-        } finally {
-            em.close();
-        }
+        
     }
 
     @AfterEach
     public void tearDown() {
-        EntityManager em = emf.createEntityManager();
-        try {
-            em.getTransaction().begin();
-             em.remove(em.find(Phone.class,"40404040"));
-            em.getTransaction().commit();
-        } finally {
-            em.close();
-        }
+       
 
     }
 
@@ -87,9 +94,58 @@ public class PersonFacadeTest {
     }
     
     @Test
-    public void testGetAllPersonsByHobby() {
-        assertEquals(1, facade.getAllPersonswithSpecifiedHobby("Taekwondo").size(), "Expects one rows in the database");
+    public void testGetAllPersonsByHobby() throws HobbyNotFoundException {
+        List<Person> persons = facade.getAllPersonswithSpecifiedHobby("Taekwondo");
+   
+        assertEquals(1, persons.size(), "Expects one rows in the database");
     }
     
+    @Test
+    public void testGetAllPersonsByHobbyNEGATIVE() throws HobbyNotFoundException {
+        assertThrows(HobbyNotFoundException.class, () -> {
+                facade.getAllPersonswithSpecifiedHobby("wrong hobby name");
+          }, "if persons phonenumber not found in DB It should throw PersonNotFoundExcetion");
+           
 
+    }
+    
+     @Test
+    public void testGetPersonByID() throws PersonNotFoundException {
+        assertEquals("Hans", facade.getPersonByID(1).getFirstName(), "Expects person with id = 1 to have the name Hans");
+    }
+    
+      @Test
+    public void testGetPersonByIDNEGATIVE(){
+        assertThrows(PersonNotFoundException.class, () -> {
+            facade.getPersonByID(100000);
+        }, "if persons ID not found in DB It should throw PersonNotFoundExcetion");
+           
+    }
+    
+    @Test
+    public void testgetPersonByTelephoneNumber() throws PersonNotFoundException {
+        assertEquals(name, facade.getPersonByTelephoneNumber(phone).getFirstName(), "Expects person with phonenumber = 2010211 to have the name Hans");
+    }
+    
+    @Test
+    public void testgetPersonByTelephoneNumberNEGATIVE() throws PersonNotFoundException {
+        assertThrows(PersonNotFoundException.class, () -> {
+                facade.getPersonByTelephoneNumber("wrong phone number");
+          }, "if persons phonenumber not found in DB It should throw PersonNotFoundExcetion");
+    }
+    
+    
+
+    @Test
+    public void testGetCountOfPersonsWithHobby() throws HobbyNotFoundException {  
+         assertEquals(1, facade.getCountOfPersonsWithHobby("Taekwondo"), "Expects one rows in the database");
+    }
+    
+    @Test
+    public void testGetCountOfPersonsWithHobbyNEGATIVE() throws PersonNotFoundException {
+        assertThrows(HobbyNotFoundException.class, () -> {
+                facade.getCountOfPersonsWithHobby("wrong hobby name");
+          }, "if persons phonenumber not found in DB It should throw PersonNotFoundExcetion");
+    }
+    
 }

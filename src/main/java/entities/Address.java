@@ -32,6 +32,7 @@ public class Address implements Serializable {
     
     @ManyToOne
     private CityInfo cityInfo;
+    
     @OneToMany(mappedBy = "address")
     private List<Person> persons = new ArrayList();
 
