@@ -88,7 +88,7 @@ public class PersonFacadeTest {
     
     @Test
     public void testGetAllPersonsByHobby() {
-        assertEquals(1, facade.getAllPersonswithSpecifiedHobby("Taekwondo").size(), "Expects one rows in the database");
+        assertEquals(1, facade.getAllPersonsByHobby("Taekwondo").size(), "Expects one rows in the database");
     }
     
 

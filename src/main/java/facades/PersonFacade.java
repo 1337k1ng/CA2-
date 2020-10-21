@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -106,6 +107,20 @@ public class PersonFacade {
             em.close();
         }
         
+    }
+    
+       public List<Person> getAllPersonsByHobby(String hobby) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            Query query = em.createQuery("SELECT p FROM Person p JOIN p.hobbies hobbies WHERE hobbies.name = :hobby");
+            query.setParameter("hobby", hobby);
+            List<Person> personList = query.getResultList();
+
+            return  personList;
+        } finally {
+            em.close();
+        }
+
     }
 
 }
