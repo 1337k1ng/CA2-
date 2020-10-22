@@ -5,15 +5,13 @@
  */
 package facades;
 
+
 import entities.Hobby;
 
-/**
- *
- * @author Patrick
- */
+
 public interface IHobbyFacade {
  
     
     public Hobby getHobby(String hobbyName);
-    
+
 }
