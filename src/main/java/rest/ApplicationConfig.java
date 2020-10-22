@@ -23,7 +23,7 @@ public class ApplicationConfig extends Application {
         resources.add(Exceptions.HobbyNotFoundExceptionMapper.class);
         resources.add(Exceptions.MissingInputExceptionMapper.class);
         resources.add(Exceptions.PersonNotFoundExceptionMapper.class);
-        resources.add(rest.RenameMeResource.class);
+        resources.add(rest.PersonRessource.class);
         resources.add(utils.CorsFilter.class);
     }
     

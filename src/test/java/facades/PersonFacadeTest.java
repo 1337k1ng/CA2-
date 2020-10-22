@@ -94,6 +94,7 @@ public class PersonFacadeTest {
     }
     
     @Test
+
     public void testGetAllPersonsByHobby() throws HobbyNotFoundException {
         List<Person> persons = facade.getAllPersonswithSpecifiedHobby("Taekwondo");
         assertEquals(1, persons.size(), "Expects one rows in the database");
@@ -124,6 +125,7 @@ public class PersonFacadeTest {
     public void testgetPersonByTelephoneNumber() throws PersonNotFoundException {
         assertEquals(name, facade.getPersonByTelephoneNumber(phone).getFirstName(), "Expects person with phonenumber = 2010211 to have the name Hans");
     }
+  
     
     @Test
     public void testgetPersonByTelephoneNumberNEGATIVE() throws PersonNotFoundException {

@@ -5,6 +5,7 @@
  */
 package facades;
 
+
 import Exceptions.HobbyNotFoundException;
 import Exceptions.PersonNotFoundException;
 import entities.CityInfo;
@@ -13,10 +14,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-/**
- *
- * @author Patrick
- */
+
 public interface IPersonFacade {
         
   
@@ -31,3 +29,6 @@ public interface IPersonFacade {
     public List<CityInfo> getAllCitys();
 
    }
+
+
+
