@@ -7,6 +7,7 @@ package facades;
 
 import Exceptions.HobbyNotFoundException;
 import Exceptions.PersonNotFoundException;
+import entities.CityInfo;
 import entities.Person;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -27,5 +28,6 @@ public interface IPersonFacade {
     public Person addNewPerson(Person p); 
     public Person editPerson(Person p);
     public Person deletePerson(Long id) throws PersonNotFoundException;
+    public List<CityInfo> getAllCitys();
 
-}
+   }

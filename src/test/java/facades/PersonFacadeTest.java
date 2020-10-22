@@ -117,8 +117,7 @@ public class PersonFacadeTest {
     public void testGetPersonByIDNEGATIVE(){
         assertThrows(PersonNotFoundException.class, () -> {
             facade.getPersonByID(100000);
-        }, "if persons ID not found in DB It should throw PersonNotFoundExcetion");
-           
+        }, "if persons ID not found in DB It should throw PersonNotFoundExcetion");    
     }
     
     @Test
@@ -144,7 +143,7 @@ public class PersonFacadeTest {
     public void testGetCountOfPersonsWithHobbyNEGATIVE() throws PersonNotFoundException {
         assertThrows(HobbyNotFoundException.class, () -> {
                 facade.getCountOfPersonsWithHobby("wrong hobby name");
-          }, "if persons phonenumber not found in DB It should throw PersonNotFoundExcetion");
+          }, "");
     }
     
 }

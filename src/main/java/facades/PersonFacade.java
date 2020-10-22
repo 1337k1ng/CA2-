@@ -2,6 +2,7 @@ package facades;
 
 import Exceptions.HobbyNotFoundException;
 import Exceptions.PersonNotFoundException;
+import entities.CityInfo;
 import entities.Hobby;
 import entities.Person;
 import entities.Phone;
@@ -12,6 +13,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
+import javax.sql.rowset.serial.SerialException;
 
 /**
  *
@@ -64,9 +66,11 @@ public class PersonFacade implements IPersonFacade {
           List<Person> persons;
        try{
                Hobby hob = em.find(Hobby.class, hobbyName);
+               
                  if (hob == null) {
                    throw new HobbyNotFoundException("No hobby found with the provided name");
                  }
+                 
                persons = hob.getPersons();
             return persons;
             
@@ -149,8 +153,7 @@ public class PersonFacade implements IPersonFacade {
                return p;
         }finally{  
             em.close();
-        }
-            
+        }           
         
     }
 
@@ -180,6 +183,28 @@ public class PersonFacade implements IPersonFacade {
             em.close();
         }
             
+      }
+
+    
+    @Override
+    public List<CityInfo> getAllCitys(){
+        
+         EntityManager em = emf.createEntityManager();
+        try{
+            
+           TypedQuery<CityInfo> tq = em.createQuery("SELECT c FROM CityInfo c", CityInfo.class);
+
+           List<CityInfo> allCitys = tq.getResultList();
+           
+           if (allCitys.isEmpty()){
+           // throw new Exception("An error occurred in retrieving data from the server. Please try again later");
+           }
+           
+               return allCitys;
+               
+        }finally{  
+            em.close();
         }
+    }
 
 }

@@ -46,12 +46,12 @@ public class maintest {
             PersonFacade pf = PersonFacade.getFacadeExample(emf);
       
            
-                Hobby hob = em.find(Hobby.class, "Airsoft");
-                System.out.println(hob.getCategory());
-                System.out.println(hob.getPersons().size());
+        
         em.getTransaction().commit();
         
-    pf.deletePerson(8L);
+            System.out.println(pf.getAllPersonswithSpecifiedHobby("Airsoft"));
+        
+   
         } finally {
       
             em.close();
