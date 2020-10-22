@@ -22,8 +22,10 @@ public interface IPersonFacade {
     public List<Person> getAllPersons();
     public List<Person> getAllPersonswithSpecifiedHobby(String hobbyName) throws HobbyNotFoundException;
     public int getCountOfPersonsWithHobby(String hobbyName) throws HobbyNotFoundException;
-    
     public Person getPersonByTelephoneNumber(String number) throws PersonNotFoundException;
     public Person getPersonByID(int id) throws PersonNotFoundException;
+    public Person addNewPerson(Person p); 
+    public Person editPerson(Person p);
+    public Person deletePerson(Long id) throws PersonNotFoundException;
 
 }

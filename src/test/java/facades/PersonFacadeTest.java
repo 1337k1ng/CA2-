@@ -96,7 +96,6 @@ public class PersonFacadeTest {
     @Test
     public void testGetAllPersonsByHobby() throws HobbyNotFoundException {
         List<Person> persons = facade.getAllPersonswithSpecifiedHobby("Taekwondo");
-   
         assertEquals(1, persons.size(), "Expects one rows in the database");
     }
     

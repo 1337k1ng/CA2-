@@ -65,7 +65,7 @@ public class PersonFacade implements IPersonFacade {
        try{
                Hobby hob = em.find(Hobby.class, hobbyName);
                  if (hob == null) {
-                   throw new HobbyNotFoundException("Hobby with given name not found");
+                   throw new HobbyNotFoundException("No hobby found with the provided name");
                  }
                persons = hob.getPersons();
             return persons;
@@ -89,7 +89,7 @@ public class PersonFacade implements IPersonFacade {
             return person;
             
         } catch(NoResultException e){
-            throw new PersonNotFoundException("Not found");
+            throw new PersonNotFoundException("No person found with the provided ID");
        }finally{  
             em.close();
         }
@@ -105,7 +105,7 @@ public class PersonFacade implements IPersonFacade {
              Phone phone = em.find(Phone.class, number);
              
                   if (phone == null){
-                  throw new PersonNotFoundException("Not found");
+                  throw new PersonNotFoundException("No person found with the provided ID");
                     }
                
             Person person = phone.getPerson();          
@@ -125,7 +125,7 @@ public class PersonFacade implements IPersonFacade {
             Hobby hobby = em.find(Hobby.class, hobbyName);
             
             if (hobby == null){
-                throw new HobbyNotFoundException("Hobby with given name not found");
+                throw new HobbyNotFoundException("No hobby found with the provided name");
             }
             
             int count = hobby.getPersons().size();
@@ -136,5 +136,50 @@ public class PersonFacade implements IPersonFacade {
         }
         
     }
+
+    @Override
+    public Person addNewPerson(Person p) {
+    EntityManager em = emf.createEntityManager();
+        try{
+            
+            em.getTransaction().begin();
+            em.persist(p);
+            em.getTransaction().commit();
+
+               return p;
+        }finally{  
+            em.close();
+        }
+            
+        
+    }
+
+    @Override
+    public Person editPerson(Person p) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Person deletePerson(Long id) throws PersonNotFoundException {
+    EntityManager em = emf.createEntityManager();
+     
+        try{
+            
+         Person p = em.find(Person.class, id);
+         
+         if (p == null){
+             throw new PersonNotFoundException("No person found with the provided ID");
+         }
+         
+         em.getTransaction().begin();
+         em.remove(p);
+         em.getTransaction().commit();
+        
+            return p;
+        }finally{  
+            em.close();
+        }
+            
+        }
 
 }
