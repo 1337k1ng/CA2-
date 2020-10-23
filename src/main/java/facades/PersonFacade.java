@@ -1,5 +1,7 @@
 package facades;
 
+import DTO.PersonDTO;
+import DTO.PersonsDTO;
 import Exceptions.HobbyNotFoundException;
 import Exceptions.PersonNotFoundException;
 import entities.CityInfo;
@@ -48,12 +50,13 @@ public class PersonFacade implements IPersonFacade {
     
   
     
+   
     @Override
-    public List<Person> getAllPersons(){
+    public List<PersonDTO> getAllPersons(){
         EntityManager em = emf.createEntityManager();
         try{
-            TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p", Person.class);
-            List<Person> persons = query.getResultList();
+            TypedQuery<PersonDTO> query = em.createQuery("SELECT new DTO.PersonDTO(p) FROM Person p", PersonDTO.class);
+            List<PersonDTO> persons = query.getResultList();
             return persons;
         }finally{  
             em.close();
@@ -61,10 +64,10 @@ public class PersonFacade implements IPersonFacade {
         
     }
 
+   
     @Override
-    public List<Person> getAllPersonswithSpecifiedHobby(String hobbyName) throws HobbyNotFoundException{
+    public List<PersonDTO> getAllPersonswithSpecifiedHobby(String hobbyName) throws HobbyNotFoundException{
         EntityManager em = emf.createEntityManager();
-          List<Person> persons;
        try{
                Hobby hob = em.find(Hobby.class, hobbyName);
                
@@ -72,8 +75,8 @@ public class PersonFacade implements IPersonFacade {
                    throw new HobbyNotFoundException("No hobby found with the provided name");
                  }
                  
-               persons = hob.getPersons();
-            return persons;
+           PersonsDTO p = new PersonsDTO(hob.getPersons());
+            return p.getPersons();
             
         }finally{  
             em.close();
@@ -102,8 +105,9 @@ public class PersonFacade implements IPersonFacade {
     }
 
     
+
     @Override
-    public Person getPersonByTelephoneNumber(String number) throws PersonNotFoundException{
+    public PersonDTO getPersonByTelephoneNumber(String number) throws PersonNotFoundException{
         EntityManager em = emf.createEntityManager();
         try{
             
@@ -113,7 +117,7 @@ public class PersonFacade implements IPersonFacade {
                   throw new PersonNotFoundException("No person found with the provided ID");
                     }
                
-            Person person = phone.getPerson();          
+            PersonDTO person = new PersonDTO(phone.getPerson());          
             
             return person;
         }finally{  
@@ -156,8 +160,8 @@ public class PersonFacade implements IPersonFacade {
 
     }
 
-    @Override
-    public Person addNewPerson(Person p) {
+   
+    public PersonDTO addNewPerson(Person p) {
     EntityManager em = emf.createEntityManager();
         try{
             
@@ -165,7 +169,7 @@ public class PersonFacade implements IPersonFacade {
             em.persist(p);
             em.getTransaction().commit();
 
-               return p;
+               return new PersonDTO(p);
         }finally{  
             em.close();
         }                   
@@ -192,7 +196,7 @@ public class PersonFacade implements IPersonFacade {
             em.persist(pEdit);
             em.getTransaction().commit();
 
-               return p;
+               return pEdit;
         }finally{  
             em.close();
         }           

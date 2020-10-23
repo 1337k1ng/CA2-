@@ -1,5 +1,6 @@
 package facades;
 
+import DTO.PersonDTO;
 import Exceptions.HobbyNotFoundException;
 import Exceptions.PersonNotFoundException;
 import entities.Address;
@@ -31,8 +32,8 @@ public class PersonFacadeTest {
 
      static int id = 1;
     static String phone = "2010211";
-    static String name = "Hans";
-    
+    static String firstname = "Hans";
+       static String lastname = "Hans";
     public PersonFacadeTest() {
     }
 
@@ -42,7 +43,7 @@ public class PersonFacadeTest {
        facade = PersonFacade.getFacadeExample(emf);
       EntityManager em = emf.createEntityManager();
       
-       Person p = new Person("Hans@Hansen.dk", name, "Hansen");
+       Person p = new Person("Hans@Hansen.dk", firstname, lastname);
       Address a = new Address("Njalsgade", "Hjemmeadresse", 2700);
     
       p.addHobby("Taekwondo");
@@ -96,7 +97,7 @@ public class PersonFacadeTest {
     @Test
 
     public void testGetAllPersonsByHobby() throws HobbyNotFoundException {
-        List<Person> persons = facade.getAllPersonswithSpecifiedHobby("Taekwondo");
+        List<PersonDTO> persons = facade.getAllPersonswithSpecifiedHobby("Taekwondo");
         assertEquals(1, persons.size(), "Expects one rows in the database");
     }
     
@@ -123,7 +124,8 @@ public class PersonFacadeTest {
     
     @Test
     public void testgetPersonByTelephoneNumber() throws PersonNotFoundException {
-        assertEquals(name, facade.getPersonByTelephoneNumber(phone).getFirstName(), "Expects person with phonenumber = 2010211 to have the name Hans");
+        String name = firstname + " " + lastname;
+        assertEquals(name, facade.getPersonByTelephoneNumber(phone).getFullName(), "Expects person with phonenumber = 2010211 to have the name Hans hansen");
     }
   
     
