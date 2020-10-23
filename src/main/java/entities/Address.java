@@ -84,4 +84,9 @@ public class Address implements Serializable {
     persons.add(p);
     }
 
+    @Override
+    public String toString() {
+        return "Address{" + "id=" + id + ", street=" + street + ", additionalInfo=" + additionalInfo + ", cityInfo=" + cityInfo + ", persons=" + persons + '}';
+    }
+
 }

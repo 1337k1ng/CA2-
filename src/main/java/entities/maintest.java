@@ -6,6 +6,7 @@
 package entities;
 
 import Exceptions.HobbyNotFoundException;
+import Exceptions.PersonNotFoundException;
 import facades.PersonFacade;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,17 +22,20 @@ import utils.EMF_Creator;
  */
 public class maintest {
     
-    public static void main(String[] args) throws HobbyNotFoundException {
+    public static void main(String[] args) throws HobbyNotFoundException, PersonNotFoundException {
         //Create emf pointing to the dev-database
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
         EntityManager em = emf.createEntityManager();
     
     
+
         Address a = new Address("Bredgade 2", "Hjemme addresse", 2700);
         Person p = new Person("Hans@hotmail.com", "Hans", "Hansen");
         
         p.addHobby("Airsoft");
         p.addPhone("33101090","Hjemma11edNumamer");
+
+
         p.setAddress(a);
         try {
         em.getTransaction().begin();    
@@ -39,20 +43,11 @@ public class maintest {
             
         em.getTransaction().commit();
         
-     /*      em.getTransaction().begin();    
-            Person pers = em.find(Person.class, 3L);
-            System.out.println(pers.getAddress().getCityInfo().getCity());
-            System.out.println(pers.getHobby().get(0).getWikiLink());
-             
-            PersonFacade pf = PersonFacade.getFacadeExample(emf);
+
       
-           
-        
-        em.getTransaction().commit(); 
-        
-            System.out.println(pf.getAllPersonswithSpecifiedHobby("Airsoft")); */
-        
-   
+            
+         
+
         } finally {
       
             em.close();
