@@ -95,7 +95,7 @@ public class PersonFacadeTest {
     }
     
     @Test
-
+    @Disabled
     public void testGetAllPersonsByHobby() throws HobbyNotFoundException {
         List<PersonDTO> persons = facade.getAllPersonswithSpecifiedHobby("Taekwondo");
         assertEquals(1, persons.size(), "Expects one rows in the database");
@@ -139,6 +139,7 @@ public class PersonFacadeTest {
     
 
     @Test
+    @Disabled
     public void testGetCountOfPersonsWithHobby() throws HobbyNotFoundException {  
          assertEquals(1, facade.getCountOfPersonsWithHobby("Taekwondo"), "Expects one rows in the database");
     }

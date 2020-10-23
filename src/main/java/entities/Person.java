@@ -38,7 +38,7 @@ public class Person implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     private Address address;
     
-    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval=true)
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private List<Phone> phoneNumbers = new ArrayList();
     
     public Person() {
@@ -125,6 +125,11 @@ public class Person implements Serializable {
         this.hobby.add(hobby2);
         hobby2.addPerson(this);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" + "id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName + ", hobby=" + hobby + ", address=" + address + ", phoneNumbers=" + phoneNumbers + '}';
     }
     
    

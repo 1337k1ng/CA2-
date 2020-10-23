@@ -19,16 +19,16 @@ import java.util.List;
 public class PersonDTO {
     private String fullName;
     private String email;
-    private List<Phone> phoneNumbers;
-    private List<Hobby> hobby = new ArrayList();
-    private Address address;
+    private List<PhoneDTO> phoneNumbers;
+    private List<HobbyDTO> hobby = new ArrayList();
+    private AddressDTO address;
 
     public PersonDTO(Person p) {
         this.fullName = p.getFirstName() +" "+ p.getLastName();
         this.email = p.getEmail();
-        this.phoneNumbers = p.getPhoneNumbers();
-        this.address = p.getAddress();
-        this.hobby = p.getHobby();
+        this.phoneNumbers = (new PhonesDTO(p.getPhoneNumbers())).getPhoneDTOS();
+        this.address = new AddressDTO(p.getAddress());
+        this.hobby = (new HobbysDTO(p.getHobby())).getHobbys();
     }
 
     public String getFullName() {
@@ -47,27 +47,27 @@ public class PersonDTO {
         this.email = email;
     }
 
-    public List<Phone> getPhoneNumbers() {
+    public List<PhoneDTO> getPhoneNumbers() {
         return phoneNumbers;
     }
 
-    public void setPhoneNumbers(List<Phone> phoneNumbers) {
+    public void setPhoneNumbers(List<PhoneDTO> phoneNumbers) {
         this.phoneNumbers = phoneNumbers;
     }
 
-    public List<Hobby> getHobby() {
+    public List<HobbyDTO> getHobby() {
         return hobby;
     }
 
-    public void setHobby(List<Hobby> hobby) {
+    public void setHobby(List<HobbyDTO> hobby) {
         this.hobby = hobby;
     }
 
-    public Address getAddress() {
+    public AddressDTO getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(AddressDTO address) {
         this.address = address;
     }
 

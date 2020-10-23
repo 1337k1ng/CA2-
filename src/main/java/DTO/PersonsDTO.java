@@ -18,6 +18,8 @@ public class PersonsDTO {
     
     private List<PersonDTO> persons = new ArrayList();
     
+    
+     public PersonsDTO(){}
     public PersonsDTO(List<Person> ps){
         
         for (Person p : ps){
