@@ -43,7 +43,9 @@ public class Hobby implements Serializable {
         this.category = category;
         this.type = type;
     }
-
+ public Hobby(String name) {
+     this.name = name;
+    }
     
     void addPerson(Person p) {
         this.persons.add(p);

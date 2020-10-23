@@ -121,7 +121,7 @@ public class Person implements Serializable {
   
     public void addHobby(String hobbyName){
         if (hobbyName != null) {
-        Hobby hobby2 = new Hobby(hobbyName, "", "", "");
+        Hobby hobby2 = new Hobby(hobbyName);
         this.hobby.add(hobby2);
         hobby2.addPerson(this);
         }

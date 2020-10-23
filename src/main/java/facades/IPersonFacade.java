@@ -6,14 +6,12 @@
 package facades;
 
 
+import DTO.CityInfoDTO;
 import DTO.PersonDTO;
 import Exceptions.HobbyNotFoundException;
 import Exceptions.PersonNotFoundException;
-import entities.CityInfo;
 import entities.Person;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 
 
 public interface IPersonFacade {
@@ -25,9 +23,9 @@ public interface IPersonFacade {
     public PersonDTO getPersonByTelephoneNumber(String number) throws PersonNotFoundException;
     public Person getPersonByID(int id) throws PersonNotFoundException;
     public PersonDTO addNewPerson(Person p); 
-    public Person editPerson(Person p);
-    public Person deletePerson(Long id) throws PersonNotFoundException;
-    public List<CityInfo> getAllCitys();
+    public PersonDTO editPerson(Person p);
+    public PersonDTO deletePerson(Long id) throws PersonNotFoundException;
+    public List<CityInfoDTO> getAllCitys();
 
    }
 

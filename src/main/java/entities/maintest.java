@@ -28,11 +28,11 @@ public class maintest {
         EntityManager em = emf.createEntityManager();
     
     
-        Address a = new Address("Bredgade 12", "Hjemme addresse", 2700);
-        Person p = new Person("Erik2@hotmail.com", "Erik2", "Erik");
+        Address a = new Address("Sydholmsvej 12", "Hjemme addresse", 2700);
+        Person p = new Person("Ulla@hotmail.com", "Eriku", "Erik");
         p.setId(9L);
         p.addHobby("Airsoft");
-        p.addPhone("120202","Hjemma11edNumamer");
+        p.addPhone("1201111202","Hjemma11edNumamer");
         p.setAddress(a);
         try {
         em.getTransaction().begin();    
@@ -53,7 +53,7 @@ public class maintest {
         
 
          PersonFacade pf = PersonFacade.getFacadeExample(emf);
-            System.out.println(pf.getAllPersons().toString());
+           pf.addNewPerson(p);
    
         } finally {
       
