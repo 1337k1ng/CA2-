@@ -168,13 +168,35 @@ public class PersonFacade implements IPersonFacade {
                return p;
         }finally{  
             em.close();
-        }           
-        
+        }                   
     }
 
     @Override
     public Person editPerson(Person p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      EntityManager em = emf.createEntityManager();
+        try{
+          Person pEdit = em.find(Person.class, p.getId());
+       
+          
+          pEdit.setEmail(p.getEmail());
+          pEdit.setAddress(p.getAddress());
+          pEdit.setFirstName(p.getFirstName());
+          pEdit.setLastName(p.getLastName());
+          pEdit.setPhoneNumbers(p.getPhoneNumbers());
+          
+          for (Hobby h : pEdit.getHobby()){
+          pEdit.addHobby(h.getName());
+          }
+          
+            em.getTransaction().begin();
+            em.persist(pEdit);
+            em.getTransaction().commit();
+
+               return p;
+        }finally{  
+            em.close();
+        }           
+
     }
 
     @Override

@@ -27,10 +27,11 @@ public class maintest {
         EntityManager em = emf.createEntityManager();
     
     
-        Address a = new Address("Bredgade 2", "Hjemme addresse", 2700);
-        Person p = new Person("Hans@hotmail.com", "Hans", "Hansen");
+        Address a = new Address("Bredgade 12", "Hjemme addresse", 2700);
+        Person p = new Person("Erik2@hotmail.com", "Erik2", "Erik");
+        p.setId(9L);
         p.addHobby("Airsoft");
-        p.addPhone("22102020","Hjemma11edNumamer");
+        p.addPhone("120202","Hjemma11edNumamer");
         p.setAddress(a);
         try {
         em.getTransaction().begin();    
@@ -40,16 +41,15 @@ public class maintest {
         
            em.getTransaction().begin();    
             Person pers = em.find(Person.class, 3L);
-            System.out.println(pers.getAddress().getCityInfo().getCity());
-            System.out.println(pers.getHobby().get(0).getWikiLink());
-             
+            
             PersonFacade pf = PersonFacade.getFacadeExample(emf);
       
+            pf.editPerson(p);
            
         
         em.getTransaction().commit();
         
-            System.out.println(pf.getAllPersonswithSpecifiedHobby("Airsoft"));
+
         
    
         } finally {
