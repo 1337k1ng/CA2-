@@ -1,5 +1,6 @@
 package facades;
 
+import DTO.PersonDTO;
 import Exceptions.HobbyNotFoundException;
 import Exceptions.PersonNotFoundException;
 import entities.CityInfo;

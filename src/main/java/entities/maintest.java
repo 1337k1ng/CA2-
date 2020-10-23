@@ -29,16 +29,17 @@ public class maintest {
     
         Address a = new Address("Bredgade 2", "Hjemme addresse", 2700);
         Person p = new Person("Hans@hotmail.com", "Hans", "Hansen");
+        
         p.addHobby("Airsoft");
-        p.addPhone("22102020","Hjemma11edNumamer");
+        p.addPhone("33101090","Hjemma11edNumamer");
         p.setAddress(a);
         try {
         em.getTransaction().begin();    
-       // em.persist(p);
+        em.persist(p);
             
         em.getTransaction().commit();
         
-           em.getTransaction().begin();    
+     /*      em.getTransaction().begin();    
             Person pers = em.find(Person.class, 3L);
             System.out.println(pers.getAddress().getCityInfo().getCity());
             System.out.println(pers.getHobby().get(0).getWikiLink());
@@ -47,9 +48,9 @@ public class maintest {
       
            
         
-        em.getTransaction().commit();
+        em.getTransaction().commit(); 
         
-            System.out.println(pf.getAllPersonswithSpecifiedHobby("Airsoft"));
+            System.out.println(pf.getAllPersonswithSpecifiedHobby("Airsoft")); */
         
    
         } finally {
