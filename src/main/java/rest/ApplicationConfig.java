@@ -20,8 +20,8 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(Exceptions.DBExceptionMapper.class);
         resources.add(Exceptions.HobbyNotFoundExceptionMapper.class);
-        resources.add(Exceptions.MissingInputExceptionMapper.class);
         resources.add(Exceptions.PersonNotFoundExceptionMapper.class);
         resources.add(rest.PersonRessource.class);
         resources.add(utils.CorsFilter.class);

@@ -9,8 +9,9 @@ package Exceptions;
  *
  * @author Patrick
  */
-public class MissingInputException extends Exception {
-    public MissingInputException (String message) {
+public class DBException extends Exception {
+       public DBException(String message) {
         super(message);
     }
+
 }

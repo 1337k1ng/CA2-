@@ -35,26 +35,16 @@ public class maintest {
         p.addPhone("1201111202","Hjemma11edNumamer");
         p.setAddress(a);
         try {
-        em.getTransaction().begin();    
-       // em.persist(p);
-            
-        em.getTransaction().commit();
         
-           em.getTransaction().begin();    
-         
-            
            
             
-         
-    
-           
-        
-        em.getTransaction().commit();
+
         
 
          PersonFacade pf = PersonFacade.getFacadeExample(emf);
-           pf.addNewPerson(p);
-   
+         Person p2 = pf.getPersonByID(9);
+         p.setEmail("Edditted");
+         pf.editPerson(p2);
         } finally {
       
             em.close();

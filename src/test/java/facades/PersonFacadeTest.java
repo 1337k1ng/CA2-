@@ -1,6 +1,7 @@
 package facades;
 
 import DTO.PersonDTO;
+import Exceptions.DBException;
 import Exceptions.HobbyNotFoundException;
 import Exceptions.PersonNotFoundException;
 import entities.Address;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -79,9 +81,31 @@ public class PersonFacadeTest {
     // Setup the DataBase in a known state BEFORE EACH TEST
     //TODO -- Make sure to change the code below to use YOUR OWN entity class
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws PersonNotFoundException {
+          emf = EMF_Creator.createEntityManagerFactoryForTest();
+       facade = PersonFacade.getFacadeExample(emf);
+      EntityManager em = emf.createEntityManager();
+      
+       try {
+             List<Person> allP = new ArrayList<>();
+             
+                         TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p", Person.class);
+                          allP = query.getResultList();
+              
         
-    }
+            for (Person p : allP){
+                if (p.getId() != 1L){
+                facade.deletePerson(p.getId());
+                        }
+            }
+            
+            
+        } finally {
+            em.close();
+        }
+    }    
+        
+    
 
     @AfterEach
     public void tearDown() {
@@ -122,6 +146,8 @@ public class PersonFacadeTest {
         }, "if persons ID not found in DB It should throw PersonNotFoundExcetion");    
     }
     
+    
+    
     @Test
     public void testgetPersonByTelephoneNumber() throws PersonNotFoundException {
         String name = firstname + " " + lastname;
@@ -151,4 +177,76 @@ public class PersonFacadeTest {
           }, "");
     }
     
+    
+    
+    @Test
+    public void testAddNewPerson() throws PersonNotFoundException {  
+        int CountBefore = facade.getAllPersons().size();
+        Person p = new Person("Test@add.com", "Test", "test");
+        p.addHobby("Taekwondo");
+        p.addPhone("20212112", "Test phone");
+        p.setAddress(new Address("testgade", "Teststed", 2800));
+         facade.addNewPerson(p);
+         assertEquals(CountBefore + 1, facade.getAllPersons().size(), "Expects to have one more person in the database");
+   
+        
+    }
+
+     @Test
+    public void testAddNewPersonNEGATIVE() {  
+      
+        // assertEquals(CountBefore + 1, facade.getAllPersons().size(), "Expects to have one more person in the database");
+    }
+    
+    
+       @Test
+       @Disabled
+    public void testEditPerson() throws PersonNotFoundException {  
+                
+        Person p = facade.getPersonByID(1);
+       
+         p.setEmail("Editted@mail.com");
+         facade.editPerson(p);
+         assertEquals("Editted@mail.com",facade.getPersonByID(1).getEmail(), "Expects to have chacged the persons email in the database");
+    }
+    
+    @Test
+    public void testEditPersonNEGATIVE() throws PersonNotFoundException {  
+     
+          assertThrows(PersonNotFoundException.class, () -> {
+              Person p = new Person(phone, firstname, lastname);
+              p.setId(9999L);
+                facade.editPerson(p);
+          }, "");
+        
+    }
+    
+     @Test
+    public void testDeletePerson() throws PersonNotFoundException {  
+                 Person p = new Person("Test@add.com", "Test", "test");
+        p.addHobby("Taekwondo");
+        p.addPhone("20212112", "Test phone");
+        p.setAddress(new Address("testgade", "Teststed", 2800));
+         facade.addNewPerson(p);
+        int CountBefore = facade.getAllPersons().size();
+        facade.deletePerson(2L);
+         assertEquals(CountBefore - 1, facade.getAllPersons().size() , "Expects to have one less person in the database");
+    }
+    
+     @Test
+    public void testDeletePersonNEGATIVE() throws PersonNotFoundException {  
+     
+          assertThrows(PersonNotFoundException.class, () -> {
+                facade.deletePerson(999L);
+          }, "");
+        
+    }
+    
+    
+     @Test
+    public void testGetAllCitys() throws DBException  {  
+       assertEquals(2, facade.getAllCitys().size(), "Expects to have 2 citys in the database");
+
+    }
+
 }
