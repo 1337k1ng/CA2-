@@ -1,6 +1,7 @@
 package rest;
 
 import DTO.PersonDTO;
+import Exceptions.PersonNotFoundException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import entities.Hobby;
@@ -59,21 +60,26 @@ public class PersonRessource {
     @GET
     @Path("id/{id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public String getPersonById(@PathParam("id")int id) {
+    public String getPersonById(@PathParam("id")int id) throws PersonNotFoundException {
         
-        return "";
-                //GSON.toJson(FACADE.getPersonByID(id));
+        
+        
+        return GSON.toJson(FACADE.getPersonByID(id));
+                
         
     }
     
     
     //Finds a person with the specified phoneNumber
+    
+    //Skal jeg ikke "returne" en person her?
+    
     @GET
-    @Path("phone/{phonenumber}")
+    @Path("number/{number}")
     @Produces({MediaType.APPLICATION_JSON})
-    public String getPersonByPhonenumber() {
+    public String getPersonByPhonenumber(@PathParam("phonenumber")String number) throws PersonNotFoundException {
         
-        return "";
+        return GSON.toJson(FACADE.getPersonByTelephoneNumber(number));
     }
     
     //api/persons/hobby/{hobby}/count
@@ -96,23 +102,41 @@ public class PersonRessource {
         FACADE.addNewPerson(personToAdd);
         return person;
         
-       //Edit person chosen by ID  
+        
     }
+    
+    
+    
+    //Edit person chosen by ID er ikke lavet 
+    //Metode mock-uppen tager imod en (int id) lige nu, men deletePersonById tager imod en Long?
+   /*
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})  
        
-    public String editPersonById() {
+    public String editPersonById(int id) {
         return "";
     }
+    */
+    
+    
+    
+    
     
     //Delete person chosen by ID. 
+    //Hvorfor vil FACADE.deletePerson metoden have en Long? 
+    
     @DELETE
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     
-   public String deletePersonById(){
-        return "";
+   public void deletePersonById(@PathParam("id")Long id)throws PersonNotFoundException{
+       
+      
+      FACADE.deletePerson(id);
+     // Person personToDelete = FACADE.deletePerson(id);
+       
+       
     }
     }
 
