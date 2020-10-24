@@ -2,6 +2,8 @@ package rest;
 
 import DTO.PersonDTO;
 import Exceptions.PersonNotFoundException;
+import Exceptions.HobbyNotFoundException;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import entities.Hobby;
@@ -49,9 +51,9 @@ public class PersonRessource {
     @GET
     @Path("hobby/{hobbyName}")
     @Produces({MediaType.APPLICATION_JSON})
-    public String getPersonsWithHobby(@PathParam("hobbyName")String hobby) {
+    public String getPersonsWithHobby(@PathParam("hobbyName")String hobby) throws HobbyNotFoundException {
           
-     return GSON.toJson(FACADE.getAllPersonsByHobby(hobby));
+     return GSON.toJson(FACADE.getAllPersonswithSpecifiedHobby(hobby));
    
     }
     
