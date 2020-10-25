@@ -1,9 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package entities;
+
 import Exceptions.HobbyNotFoundException;
 import Exceptions.PersonNotFoundException;
 import facades.PersonFacade;
@@ -15,25 +12,38 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import utils.EMF_Creator;
 
-/**
- *
- * @author Benjamin
- */
+@author Benjamin
+ 
 public class maintest {
     
     public static void main(String[] args) throws HobbyNotFoundException, PersonNotFoundException {
         //Create emf pointing to the dev-database
-     /*   EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
         EntityManager em = emf.createEntityManager();
     
     
-        Address a = new Address("Sydholmsvej 12", "Hjemme addresse", 2700);
-        Person p = new Person("Ulla@hotmail.com", "Eriku", "Erik");
-        p.setId(9L);
+
+        Address a = new Address("Bredgade 2", "Hjemme addresse", 2700);
+        Person p = new Person("Hans@hotmail.com", "Hans", "Hansen");
+        
         p.addHobby("Airsoft");
-        p.addPhone("1201111202","Hjemma11edNumamer");
+        p.addPhone("33101090","Hjemma11edNumamer");
+
+
         p.setAddress(a);
         try {
+
+        em.getTransaction().begin();    
+        em.persist(p);
+            
+        em.getTransaction().commit();
+        
+
+      
+            
+         
+
+
         
            
             
@@ -44,17 +54,12 @@ public class maintest {
          Person p2 = pf.getPersonByID(9);
          p.setEmail("Edditted");
          pf.editPerson(p2);
+
         } finally {
       
             em.close();
         }
  
-   */
-   EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
-        EntityManager em = emf.createEntityManager();
-   PersonFacade pf = PersonFacade.getFacadeExample(emf);
-   
-  System.out.println (pf.deletePerson(1l));
     }
     
 }
