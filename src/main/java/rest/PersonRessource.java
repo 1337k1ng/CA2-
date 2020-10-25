@@ -48,7 +48,7 @@ public class PersonRessource {
 
 }   
     //Virker
-    ///api/persons/hobby/{hobby}/count
+    ///api/persons/hobby/{hobbyName}/count
     @GET
     @Path("hobby/{hobbyName}/count")
     @Produces({MediaType.APPLICATION_JSON})
@@ -56,18 +56,6 @@ public class PersonRessource {
         return GSON.toJson(FACADE.getCountOfPersonsWithHobby(hobby));
 
 }
-   
-        
-    // VIRKER
-    //All Persons having a specified hobby
-    @GET
-    @Path("hobby/{hobbyName}")
-    @Produces({MediaType.APPLICATION_JSON})
-    public String getPersonsWithHobby(@PathParam("hobbyName")String hobby) throws HobbyNotFoundException {
-          
-     return GSON.toJson(FACADE.getAllPersonswithSpecifiedHobby(hobby));
-   
-    }
     
     // Virker
     @GET
@@ -83,10 +71,7 @@ public class PersonRessource {
     }
     
     
-    
-    //ILLUGAL ARGUU
-    //Finds a person with the specified phoneNumber
-    //Skal jeg ikke "returne" en person her?
+     //Virker
     
     @GET
     @Path("number/{number}")
@@ -95,10 +80,27 @@ public class PersonRessource {
         
         return GSON.toJson(FACADE.getPersonByTelephoneNumber(number));
     }
+   
+        
+    // VIRKER
+    //All Persons having a specified hobby
+    @GET
+    @Path("hobby/{hobbyName}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getPersonsWithHobby(@PathParam("hobbyName")String hobby) throws HobbyNotFoundException {
+          
+     return GSON.toJson(FACADE.getAllPersonswithSpecifiedHobby(hobby));
+   
+    }
     
     
-//  api/persons/zip
-//  Metoden getAllCitys returnerer en liste
+    
+    
+    
+   
+    
+    
+//  Virker
     @GET
     @Path("zip")
     @Produces({MediaType.APPLICATION_JSON})
@@ -109,21 +111,16 @@ public class PersonRessource {
     }
    
     
-    
- // status : ?????   
- //adds a person 
+    // Lige lavet, virker lortet?
     @POST
-    @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
     public String addPerson(String person) {
-        
-        Person personToAdd = GSON.fromJson(person,Person.class);
-       
+        Person personToAdd = GSON.fromJson(person, Person.class);
         FACADE.addNewPerson(personToAdd);
         return person;
-        
-        
     }
+    
     
     
     
@@ -142,7 +139,7 @@ public class PersonRessource {
     
     
     
-    // VIRKER IKKE 
+    // Virker 
     //Delete person chosen by ID. 
  
     @Path("delete/{id}")
