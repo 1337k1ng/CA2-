@@ -180,12 +180,8 @@ public class PersonFacade implements IPersonFacade {
           pEdit.setAddress(p.getAddress());
           pEdit.setFirstName(p.getFirstName());
           pEdit.setLastName(p.getLastName());
-          pEdit.setPhoneNumbers(p.getPhoneNumbers());
-          
-          for (Hobby h : p.getHobby()){
-          pEdit.addHobby(h.getName());
-          }
-          
+        
+ 
           
           em.getTransaction().commit();
           

@@ -53,8 +53,13 @@ public class maintest {
    EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
         EntityManager em = emf.createEntityManager();
    PersonFacade pf = PersonFacade.getFacadeExample(emf);
-   
-  System.out.println (pf.deletePerson(1l));
+     Address a = new Address("Sydholmsvej 12", "Hjemme addresse", 2700);
+        Person p = new Person("Ulssssla@hotmail.com", "Eriku", "Erik");
+        p.setId(9L);
+        p.addHobby("Airsoft");
+        p.addPhone("444402","Hjemma11edNumamer");
+        p.setAddress(a);
+    pf.editPerson(p);
     }
     
 }

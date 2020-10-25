@@ -118,6 +118,12 @@ public class Person implements Serializable {
         }
     }
     
+    public void addPhone(Phone p){
+        if (p != null){
+         p.setPerson(this);
+        this.phoneNumbers.add(p) ;
+        }
+    }
   
     public void addHobby(String hobbyName){
         if (hobbyName != null) {
