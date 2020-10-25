@@ -148,7 +148,7 @@ public class PersonFacade implements IPersonFacade {
 
    
     @Override
-    public PersonDTO addNewPerson(Person p) {
+    public void addNewPerson(Person p) {
     EntityManager em = emf.createEntityManager();
         try{
             
@@ -156,7 +156,6 @@ public class PersonFacade implements IPersonFacade {
             em.persist(p);
             em.getTransaction().commit();
 
-               return new PersonDTO(p);
         }finally{  
             em.close();
         }                   

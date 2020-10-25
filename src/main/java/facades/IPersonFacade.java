@@ -23,7 +23,7 @@ public interface IPersonFacade {
     public int getCountOfPersonsWithHobby(String hobbyName) throws HobbyNotFoundException;
     public PersonDTO getPersonByTelephoneNumber(String number) throws PersonNotFoundException;
     public Person getPersonByID(int id) throws PersonNotFoundException;
-    public PersonDTO addNewPerson(Person p); 
+    public void addNewPerson(Person p); 
     public PersonDTO editPerson(Person p) throws PersonNotFoundException;;
     public PersonDTO deletePerson(Long id) throws PersonNotFoundException;
     public List<CityInfoDTO> getAllCitys() throws DBException;

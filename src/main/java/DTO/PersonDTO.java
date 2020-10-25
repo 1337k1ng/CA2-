@@ -19,7 +19,7 @@ import java.util.List;
 public class PersonDTO {
     private String fullName;
     private String email;
-    private List<PhoneDTO> phoneNumbers;
+    private List<PhoneDTO> phoneNumbers = new ArrayList();
     private List<HobbyDTO> hobby = new ArrayList();
     private AddressDTO address;
 
