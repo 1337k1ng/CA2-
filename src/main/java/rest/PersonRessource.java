@@ -126,24 +126,18 @@ public class PersonRessource {
     }
     
     
-    
-    //Edit person chosen by ID er ikke lavet 
-    //Metode mock-uppen tager imod en (int id) lige nu, men deletePersonById tager imod en Long?
-   /*
+  
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})  
-       
-    public String editPersonById(int id) {
-        return "";
+    public String editPerson(Person p) throws PersonNotFoundException {
+        return GSON.toJson(FACADE.editPerson(p));
     }
-    */
+   
     
     
     
-    
-    // VIRKER IKKE 
-    //Delete person chosen by ID. 
+
  
     @Path("delete/{id}")
     @DELETE
