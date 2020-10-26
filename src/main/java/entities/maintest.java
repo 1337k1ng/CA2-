@@ -57,9 +57,11 @@ public class maintest {
         Person p = new Person("Ulssssla@hotmail.com", "Eriku", "Erik");
         p.setId(9L);
         p.addHobby("Airsoft");
-        p.addPhone("444402","Hjemma11edNumamer");
+        p.addPhone("4444012","Hjemma11edNumamer");
         p.setAddress(a);
-    pf.editPerson(p);
+        em.getTransaction().begin();
+        em.persist(p);
+        em.getTransaction().commit();
     }
     
 }
