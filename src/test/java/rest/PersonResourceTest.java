@@ -1,5 +1,6 @@
-/*package rest;
-
+/* package rest;
+import entities.Address;
+import entities.Person;
 import entities.RenameMe;
 import utils.EMF_Creator;
 import io.restassured.RestAssured;
@@ -22,11 +23,12 @@ import org.junit.jupiter.api.Test;
 //Uncomment the line below, to temporarily disable this test
 //@Disabled
 
-public class RenameMeResourceTest {
+public class PersonResourceTest {
 
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
-    private static RenameMe r1, r2;
+    private Person p1, p2, p3;
+    private Adress a1, a2, a3;
 
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
@@ -43,6 +45,8 @@ public class RenameMeResourceTest {
         EMF_Creator.startREST_TestWithDB();
         emf = EMF_Creator.createEntityManagerFactoryForTest();
 
+        
+        
         httpServer = startServer();
         //Setup RestAssured
         RestAssured.baseURI = SERVER_URL;
@@ -64,8 +68,13 @@ public class RenameMeResourceTest {
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
-        r1 = new RenameMe("Some txt", "More text");
-        r2 = new RenameMe("aaa", "bbb");
+        p1 = new Person("John@john.dk", "John", "John");
+        p2 = new Person("Kim@kim.dk", "Kim", "Kim");
+        p3 = new Person("Lis@lis.dk", "Lis", "Lis");
+        a1 = new Address("Slotsbakken 118", "Nakker", 2970);
+        a2 = new Address("Nyborggade 111", "Larm", 2970);
+        a3 = new Address("Møntmestervej 112", "Erok", 2970);
+        
         try {
             em.getTransaction().begin();
             em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
