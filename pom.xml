@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>dat.sem3</groupId>
-    <artifactId>devops-starter</artifactId>
+    <artifactId>Eksamens_opgave</artifactId>
     <version>1.0.1</version>
     <packaging>war</packaging>
 
-    <name>dat3-startcode</name>
+    <name>Eksamens_opgave</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
@@ -16,7 +16,7 @@
         <!-- TODO: Add the URL to your own tomcat server. Used to deploy your WAR-file -->
         <!-- IMPORTANT-1: If your server uses https (via NGINX) use your DOMAIN NAME and https below: -->
         <!-- IMPORTANT-2: Observe we are NOT using /manager/html but /manager/text for script uploads --> 
-        <remote.server>https://theonegruppetorulethemall.com/manager/text</remote.server>
+        <remote.server>https://Theonegruppetorulethemall.com/manager/text</remote.server>
         
     </properties>
     
@@ -34,23 +34,12 @@
             <version>8.0.17</version>
         </dependency>
       
-    <dependency>
-   <groupId>org.glassfish.jersey.containers</groupId>
-   <artifactId>jersey-container-servlet</artifactId>
-   <version>2.26</version>
-</dependency>
-<dependency>
-   <groupId>org.glassfish.jersey.inject</groupId>
-   <artifactId>jersey-hk2</artifactId>
-   <version>2.26</version>
-</dependency>
-        
-         <dependency>
+        <dependency>
             <groupId>org.glassfish.jersey.bundles</groupId>
             <artifactId>jaxrs-ri</artifactId>
             <version>2.32</version>
         </dependency>
-        
+               
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
@@ -103,6 +92,21 @@
             <version>4.3.1</version>
             <scope>test</scope>
         </dependency>
+        
+        <!-- Security Dependencies (jwt-support) -->
+        
+        <!-- https://mvnrepository.com/artifact/com.nimbusds/nimbus-jose-jwt -->
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+            <version>9.0.1</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
+        </dependency>
 
     </dependencies>
 
@@ -154,7 +158,8 @@
                     <compilerArgs>
                         <!-- Comment in (and dont forget out) as required -->
                         <!-- <arg>-verbose</arg>-->
-                        <!-- <arg>-Xlint:unchecked</arg>-->
+                        <!--<arg>-Xlint:unchecked</arg>-->
+                        <!--<arg>-Xlint:deprecation</arg>-->
                     </compilerArgs>
                 </configuration>
             </plugin>

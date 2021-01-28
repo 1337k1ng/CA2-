@@ -14,18 +14,22 @@ public class ApplicationConfig extends Application {
     }
 
     /**
-     * Do not modify addRestResourceClasses() method.
-     * It is automatically populated with
-     * all resources defined in the project.
-     * If required, comment out calling this method in getClasses().
+     * Do not modify addRestResourceClasses() method. It is automatically
+     * populated with all resources defined in the project. If required, comment
+     * out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(Exceptions.DBExceptionMapper.class);
-        resources.add(Exceptions.HobbyNotFoundExceptionMapper.class);
-        resources.add(Exceptions.PersonNotFoundExceptionMapper.class);
+        resources.add(cors.CorsFilter.class);
+        resources.add(errorhandling.API_ExceptionMapper.class);
+        resources.add(errorhandling.GenericExceptionMapper.class);
         resources.add(org.glassfish.jersey.server.wadl.internal.WadlResource.class);
-        resources.add(rest.PersonRessource.class);
-        resources.add(utils.CorsFilter.class);
+        resources.add(rest.CourseResource.class);
+        resources.add(rest.DemoResource.class);
+        resources.add(security.JWTAuthenticationFilter.class);
+        resources.add(security.LoginEndpoint.class);
+        resources.add(security.RolesAllowedFilter.class);
+        resources.add(security.errorhandling.AuthenticationExceptionMapper.class);
+        resources.add(security.errorhandling.NotAuthorizedExceptionMapper.class);
     }
-    
+
 }
